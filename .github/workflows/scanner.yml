@@ -1,0 +1,39 @@
+name: Scan IPs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  scan_ips:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run scan script
+        run: python main.py
+
+      - name: Pull latest changes
+        run: git pull origin main
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add IPs.txt
+          git commit -m "Add scanned IPs" || echo "No changes to commit"
+      
+      - name: Push changes
+        if: success()
+        uses: ad-m/github-push-action@v0.7.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
