@@ -10,7 +10,7 @@ ENDPOINTS = ["mjpg/video.mjpg"]  # Array of endpoints to test
 USER_AGENT_FILE = 'user_agents.txt'
 IP_FILE = 'IPs.txt'
 NUM_THREADS = 4
-MAX_RUNTIME = 5 * 60 * 60  # 5 hours in seconds
+MAX_RUNTIME = 3 * 60 * 60  # 5 hours in seconds
 
 # Initialize colorama
 init()
